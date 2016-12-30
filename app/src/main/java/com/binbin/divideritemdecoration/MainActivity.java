@@ -1,0 +1,139 @@
+package com.binbin.divideritemdecoration;
+
+import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.security.auth.login.LoginException;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
+    private RecyclerView recyclerView;
+    private List<String> str = new ArrayList<>();
+    private MyAdapter adapter;
+    private Button btHas,btNo;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        recyclerView= (RecyclerView) findViewById(R.id.rv);
+        btHas= (Button) findViewById(R.id.has);
+        btNo= (Button) findViewById(R.id.no);
+        for (int i = 0; i < 10; i++) {
+            str.add(i + "个");
+        }
+        //设置adapter
+        adapter=new MyAdapter(str,this);
+        //设置布局管理器
+//        StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(5,1);
+        GridLayoutManager layoutManager=new GridLayoutManager(this,3);
+//        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
+        layoutManager.setOrientation(1);
+        recyclerView.setLayoutManager(layoutManager);
+        final D2 dividerItemDecoration=new D2(30);
+//        final DividerItemDecoration2 dividerItemDecoration=new DividerItemDecoration2(this,R.drawable.divider);
+//        dividerItemDecoration.setDrawBorderLine(true);
+//        dividerItemDecoration.setFlag(true);
+//        dividerItemDecoration.setDrawTopAndBottom(true);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setAdapter(adapter);
+        btHas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.removeItemDecoration(dividerItemDecoration);
+                dividerItemDecoration.setDrawBorderLine(true);
+                recyclerView.addItemDecoration(dividerItemDecoration);
+            }
+        });
+        btNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.removeItemDecoration(dividerItemDecoration);
+                dividerItemDecoration.setDrawBorderLine(false);
+                recyclerView.addItemDecoration(dividerItemDecoration);
+            }
+        });
+    }
+    class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+
+        private List<String> datas;
+        private Context mContext;
+        public MyAdapter(List<String> datas,Context mContext){
+            this.datas=datas;
+            this.mContext=mContext;
+        }
+        @Override
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item, parent,
+                    false));
+        }
+
+        @Override
+        public void onBindViewHolder(MyViewHolder holder, int position) {
+            holder.tv.setText(datas.get(position));
+            if(position==0){
+                holder.tv.setBackgroundColor(Color.BLUE);
+            }else if(position==1){
+                holder.tv.setBackgroundColor(Color.MAGENTA);
+            }else if(position==2){
+                holder.tv.setBackgroundColor(Color.GREEN);
+            }
+            //手动更改高度，不同位置的高度有所不同
+//            holder.tv.setHeight(100 + (position % 3) * 30);
+        }
+
+        @Override
+        public int getItemCount() {
+            return datas.size();
+        }
+
+        class MyViewHolder extends RecyclerView.ViewHolder {
+            TextView tv;
+
+            public MyViewHolder(View view) {
+                super(view);
+                tv = (TextView) view.findViewById(R.id.tv);
+            }
+        }
+    }
+}
