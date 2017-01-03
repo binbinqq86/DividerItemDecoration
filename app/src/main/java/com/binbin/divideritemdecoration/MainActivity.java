@@ -59,29 +59,38 @@ public class MainActivity extends AppCompatActivity {
         recyclerView= (RecyclerView) findViewById(R.id.rv);
         btHas= (Button) findViewById(R.id.has);
         btNo= (Button) findViewById(R.id.no);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 122; i++) {
             str.add(i + "个");
         }
         //设置adapter
         adapter=new MyAdapter(str,this);
+        final DividerItemDecoration2 dividerItemDecoration=new DividerItemDecoration2(this,R.drawable.divider);
+        dividerItemDecoration.setDrawBorderTopAndBottom(true);
+        dividerItemDecoration.setDrawBorderLeftAndRight(true);
+//        dividerItemDecoration.setOnlySetItemOffsetsButNoDraw(true);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
         //设置布局管理器
 //        StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(5,1);
         GridLayoutManager layoutManager=new GridLayoutManager(this,3);
 //        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(1);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return (3 - position % 3);
+//                return 1;
+            }
+        });
         recyclerView.setLayoutManager(layoutManager);
-        final D2 dividerItemDecoration=new D2(30);
-//        final DividerItemDecoration2 dividerItemDecoration=new DividerItemDecoration2(this,R.drawable.divider);
-//        dividerItemDecoration.setDrawBorderLine(true);
-//        dividerItemDecoration.setFlag(true);
-//        dividerItemDecoration.setDrawTopAndBottom(true);
-        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         btHas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recyclerView.removeItemDecoration(dividerItemDecoration);
-                dividerItemDecoration.setDrawBorderLine(true);
+//                dividerItemDecoration.setDrawBorderLine(true);
                 recyclerView.addItemDecoration(dividerItemDecoration);
             }
         });
@@ -89,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 recyclerView.removeItemDecoration(dividerItemDecoration);
-                dividerItemDecoration.setDrawBorderLine(false);
+//                dividerItemDecoration.setDrawBorderLine(false);
                 recyclerView.addItemDecoration(dividerItemDecoration);
             }
         });
@@ -110,13 +119,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.tv.setText(datas.get(position));
-            if(position==0){
+            holder.tv.setText(datas.get(holder.getAdapterPosition()));
+            if(holder.getAdapterPosition()==0){
                 holder.tv.setBackgroundColor(Color.BLUE);
-            }else if(position==1){
+            }else if(holder.getAdapterPosition()==1){
                 holder.tv.setBackgroundColor(Color.MAGENTA);
-            }else if(position==2){
+            }else if(holder.getAdapterPosition()==2){
                 holder.tv.setBackgroundColor(Color.GREEN);
+            }else{
+                holder.tv.setBackgroundColor(Color.WHITE);
             }
             //手动更改高度，不同位置的高度有所不同
 //            holder.tv.setHeight(100 + (position % 3) * 30);

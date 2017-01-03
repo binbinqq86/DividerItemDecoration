@@ -18,8 +18,9 @@ import android.view.View;
  * RecyclerView分割线
  * 暂时对StaggeredGridLayoutManager错序不支持，其他情况均支持
  * 自定义LayoutManager暂不做考虑
+ * 已知bug：网格布局对itemOffsets设置不准确，已弃用！！！
  */
-
+@Deprecated
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private static final String TAG = "tianbin";
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
@@ -170,13 +171,13 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
                     if(isFirstColumn(parent,params.getViewLayoutPosition(),spanCount)){
                         left=child.getLeft()-params.leftMargin-mDivider.getIntrinsicWidth();
                         right = left + mDivider.getIntrinsicWidth();
-                        Log.e(TAG, params.getViewLayoutPosition()+"***11111111111drawHorizontal: "+left+"$"+right+"%%%"+child.getMeasuredWidth() );
+//                        Log.e(TAG, params.getViewLayoutPosition()+"***11111111111drawHorizontal: "+left+"$"+right+"%%%"+child.getMeasuredWidth() );
                         mDivider.setBounds(left, top, right, bottom);
                         mDivider.draw(c);
                     }
                 }else{
                     if(isLastColum(parent,params.getViewLayoutPosition(),spanCount,allChildCount)){
-                        Log.e(TAG, params.getViewLayoutPosition()+"***333333333333333drawHorizontal: "+left+"$"+right+"%%%"+child.getMeasuredWidth() );
+//                        Log.e(TAG, params.getViewLayoutPosition()+"***333333333333333drawHorizontal: "+left+"$"+right+"%%%"+child.getMeasuredWidth() );
                         continue;
                     }
                 }
@@ -193,7 +194,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             }
             left = child.getRight() + params.rightMargin;
             right = left + mDivider.getIntrinsicHeight();
-            Log.e(TAG, params.getViewLayoutPosition()+"***22222222222222drawHorizontal: "+left+"$"+right+"%%%"+child.getMeasuredWidth() );
+//            Log.e(TAG, params.getViewLayoutPosition()+"***22222222222222drawHorizontal: "+left+"$"+right+"%%%"+child.getMeasuredWidth() );
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
         }
