@@ -59,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView= (RecyclerView) findViewById(R.id.rv);
         btHas= (Button) findViewById(R.id.has);
         btNo= (Button) findViewById(R.id.no);
-        for (int i = 0; i < 122; i++) {
+        for (int i = 0; i < 9; i++) {
             str.add(i + "个");
         }
         //设置adapter
         adapter=new MyAdapter(str,this);
-        final DividerItemDecoration2 dividerItemDecoration=new DividerItemDecoration2(this,R.drawable.divider);
+        final DividerItemDecoration2 dividerItemDecoration=new DividerItemDecoration2(this);
         dividerItemDecoration.setDrawBorderTopAndBottom(true);
         dividerItemDecoration.setDrawBorderLeftAndRight(true);
 //        dividerItemDecoration.setOnlySetItemOffsetsButNoDraw(true);
@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return (3 - position % 3);
-//                return 1;
+//                return (3 - position % 3);
+                return 1;
             }
         });
         recyclerView.setLayoutManager(layoutManager);

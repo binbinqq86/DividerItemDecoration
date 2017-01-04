@@ -18,9 +18,8 @@ import android.view.View;
  * RecyclerView分割线
  * 暂时对StaggeredGridLayoutManager错序不支持，其他情况均支持
  * 自定义LayoutManager暂不做考虑
- * 已知bug：网格布局对itemOffsets设置不准确，已弃用！！！
+ * 已知bug：网格布局对itemOffsets设置不准确(保证了divider，但item宽度不一致)
  */
-@Deprecated
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private static final String TAG = "tianbin";
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
