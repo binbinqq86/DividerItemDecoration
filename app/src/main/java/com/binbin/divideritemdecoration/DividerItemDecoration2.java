@@ -68,7 +68,6 @@ public class DividerItemDecoration2 extends RecyclerView.ItemDecoration {
         a.recycle();
         this.dividerHeight=mDivider.getIntrinsicHeight();
         this.dividerWidth=mDivider.getIntrinsicWidth();
-        Log.e(TAG, "DividerItemDecoration2: "+mDivider.getIntrinsicHeight() );
     }
 
     /**
@@ -396,7 +395,7 @@ public class DividerItemDecoration2 extends RecyclerView.ItemDecoration {
                 }
             }
         }
-//        Log.e(TAG, "getItemOffsets: "+left+"@"+top+"#"+right+"$"+bottom+"%"+itemPosition );
+        Log.e(TAG, "getItemOffsets: "+left+"@"+top+"#"+right+"$"+bottom+"%"+itemPosition );
         outRect.set(left,top,right,bottom);
     }
 

@@ -12,12 +12,11 @@ import android.graphics.PorterDuffXfermode;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.*;
+import android.support.v7.widget.DividerItemDecoration;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceView;
@@ -59,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView= (RecyclerView) findViewById(R.id.rv);
         btHas= (Button) findViewById(R.id.has);
         btNo= (Button) findViewById(R.id.no);
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 11; i++) {
             str.add(i + "个");
         }
         //设置adapter
@@ -78,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-//                return (3 - position % 3);
-                return 1;
+                return (3 - position % 3);
+//                return 1;
             }
         });
         recyclerView.setLayoutManager(layoutManager);
@@ -120,15 +119,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             holder.tv.setText(datas.get(holder.getAdapterPosition()));
-            if(holder.getAdapterPosition()==0){
-                holder.tv.setBackgroundColor(Color.BLUE);
-            }else if(holder.getAdapterPosition()==1){
-                holder.tv.setBackgroundColor(Color.MAGENTA);
-            }else if(holder.getAdapterPosition()==2){
-                holder.tv.setBackgroundColor(Color.GREEN);
-            }else{
-                holder.tv.setBackgroundColor(Color.WHITE);
-            }
+//            if(holder.getAdapterPosition()==0){
+//                holder.tv.setBackgroundColor(Color.BLUE);
+//            }else if(holder.getAdapterPosition()==1){
+//                holder.tv.setBackgroundColor(Color.MAGENTA);
+//            }else if(holder.getAdapterPosition()==2){
+//                holder.tv.setBackgroundColor(Color.GREEN);
+//            }else{
+//                holder.tv.setBackgroundColor(Color.WHITE);
+//            }
             //手动更改高度，不同位置的高度有所不同
 //            holder.tv.setHeight(100 + (position % 3) * 30);
         }
@@ -146,5 +145,10 @@ public class MainActivity extends AppCompatActivity {
                 tv = (TextView) view.findViewById(R.id.tv);
             }
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

@@ -30,6 +30,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"
+        android:background="#cc3344"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp" />
