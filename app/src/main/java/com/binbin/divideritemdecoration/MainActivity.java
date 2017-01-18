@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView= (RecyclerView) findViewById(R.id.rv);
         btHas= (Button) findViewById(R.id.has);
         btNo= (Button) findViewById(R.id.no);
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 12; i++) {
             str.add(i + "个");
         }
         //设置adapter
@@ -71,14 +71,14 @@ public class MainActivity extends AppCompatActivity {
 
         //设置布局管理器
 //        StaggeredGridLayoutManager layoutManager=new StaggeredGridLayoutManager(5,1);
-        GridLayoutManager layoutManager=new GridLayoutManager(this,3);
+        GridLayoutManager layoutManager=new GridLayoutManager(this,4);
 //        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(1);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return (3 - position % 3);
-//                return 1;
+//                return (3 - position % 3);
+                return 1;
             }
         });
         recyclerView.setLayoutManager(layoutManager);
